@@ -7,7 +7,7 @@ import com.example.jpademo.parser.interfaces.Parser;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserParser extends JsonParser<BDUser> implements Parser<BDUser> {
+public class UserParser extends JsonParser<BDUser> /*implements Parser<BDUser>*/ {
     public UserParser() {
         super(BDUser.class);
     }
