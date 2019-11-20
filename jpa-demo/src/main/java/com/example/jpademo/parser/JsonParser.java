@@ -10,10 +10,10 @@ import java.io.OutputStream;
 public abstract class JsonParser<T> implements Parser<T> {
 
     private static final ObjectMapper mapper = new ObjectMapper();
-    private Class<T> parserClass;
+    private Class<T> parsedClass;
 
-    public JsonParser(Class<T> parserClass) {
-        this.parserClass = parserClass;
+    public JsonParser(Class<T> parsedClass) {
+        this.parsedClass = parsedClass;
     }
 
     public T parse(InputStream input) throws Exception {
@@ -25,15 +25,15 @@ public abstract class JsonParser<T> implements Parser<T> {
     }
 
     private T parseJson(InputStream input) throws IOException {
-        return mapper.readValue(input, getParserClass());
+        return mapper.readValue(input, getParsedClass());
     }
 
     private void writeJson(T obj, OutputStream output) throws IOException {
         mapper.writeValue(output, obj);
     }
 
-    public Class<T> getParserClass() {
-        return parserClass;
+    public Class<T> getParsedClass() {
+        return parsedClass;
     }
 
     public String getExtension() {
