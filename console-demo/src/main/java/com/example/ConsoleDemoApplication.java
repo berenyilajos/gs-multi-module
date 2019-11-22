@@ -43,6 +43,13 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 		System.out.println("================*************=================");
 		System.out.println(u);
 
+		parsManager.write2(bdUser, path);
+		u = parsManager.parseUser2(path);
+
+		System.out.println("================*************=================");
+		System.out.println("================*************=================");
+		System.out.println(u);
+
 		BDProduct product = new BDProduct();
 		product.setName("Valaki22");
 		product.setEmail("valaki22@example.com");
@@ -50,6 +57,7 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 		parsManager.write(product, path2);
 		BDProduct p = parsManager.parseProduct(path2);
 
+		System.out.println("================*************=================");
 		System.out.println("================*************=================");
 		System.out.println(p);
 	}

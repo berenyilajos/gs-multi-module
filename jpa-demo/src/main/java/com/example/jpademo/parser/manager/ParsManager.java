@@ -19,6 +19,9 @@ public class ParsManager {
     private Parser<BDUser> userParser;
 
     @Autowired
+    private Parser<BDUser> user2Parser;
+
+    @Autowired
     private Parser<BDProduct> productParser;
 
     public BDUser parseUser(String path) throws Exception {
@@ -29,6 +32,16 @@ public class ParsManager {
     public void write(BDUser user, String path) throws Exception {
         OutputStream output = new FileOutputStream(Paths.get(path + userParser.getExtension()).toFile());
         userParser.write(user, output);
+    }
+
+    public BDUser parseUser2(String path) throws Exception {
+        InputStream input = new FileInputStream(Paths.get(path + user2Parser.getExtension()).toFile());
+        return user2Parser.parse(input);
+    }
+
+    public void write2(BDUser user, String path) throws Exception {
+        OutputStream output = new FileOutputStream(Paths.get(path + user2Parser.getExtension()).toFile());
+        user2Parser.write(user, output);
     }
 
     public BDProduct parseProduct(String path) throws Exception {
