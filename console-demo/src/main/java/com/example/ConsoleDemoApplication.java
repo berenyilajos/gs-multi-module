@@ -29,7 +29,8 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 
 		for (int i = 0; i < 10; i++) {
 			bdUser.setEmail(name + i + "@example.com");
-			userService.addUser(bdUser);
+//			userService.addUser(bdUser);
+			userService.saveUser(bdUser);
 		}
 
 		System.out.println("Users: " + userService.getAllUsers());

@@ -1,4 +1,5 @@
-console-demo/derby/*
+console-demo/derbydb/
+console-demo/derbydb2/
 log/
 target/
 .settings/
