@@ -1,6 +1,0 @@
-spring.datasource.url = jdbc:derby:derby;create=true
-spring.datasource.username =
-spring.datasource.password =
-spring.jpa.show-sql=true
-spring.jpa.hibernate.ddl-auto=create-drop
-spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.DerbyTenSevenDialect
