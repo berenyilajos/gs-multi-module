@@ -2,7 +2,7 @@ package com.example.demo.parser.manager;
 
 import com.example.demo.bd.BDProduct;
 import com.example.demo.bd.BDUser;
-import com.example.demo.parser.interfaces.Parser;
+import com.example.common.parser.interfaces.Parser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

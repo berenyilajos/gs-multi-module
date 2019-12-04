@@ -4,9 +4,9 @@ import com.example.demo.bd.BDUser;
 import com.example.jpademo.dao.UserEntityDao;
 import com.example.demo.helper.EntityHelper;
 import com.example.jpademo.repository.UserRepository;
+import com.example.jpademo.transactions.DemoTransactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +36,7 @@ public class UserService {
         userRepository.save(EntityHelper.bdToEntity(bdUser));
     }
 
-    @Transactional
+    @DemoTransactional
     public void saveUser(BDUser bdUser) {
         userEntityDao.save(EntityHelper.bdToEntity(bdUser));
     }

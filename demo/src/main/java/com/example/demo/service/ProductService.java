@@ -2,12 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.bd.BDProduct;
 import com.example.demo.helper.EntityHelper;
-import com.example.demo.transactions.Demo2Transactional;
+import com.example.jpademo2.transactions.Demo2Transactional;
 import com.example.jpademo2.dao.ProductEntityDao;
 import com.example.jpademo2.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;

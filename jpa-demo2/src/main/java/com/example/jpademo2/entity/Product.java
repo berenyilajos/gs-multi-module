@@ -1,30 +1,21 @@
 package com.example.jpademo2.entity;
 
+import com.example.common.entity.BaseEntity;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name="products")
-public class Product {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue
-    private long id;
+public class Product extends BaseEntity {
+
     @Column(name = "name")
     private String name;
     @Column(name = "price")
     private BigDecimal price;
     public Product(){}
-    public long getId() {
-        return id;
-    }
-    public void setId(long id) {
-        this.id = id;
-    }
     public String getName() {
         return name;
     }
@@ -41,7 +32,7 @@ public class Product {
     @Override
     public String toString() {
         return "Product{" +
-                "id=" + id +
+                "id=" + getId() +
                 ", name='" + name + '\'' +
                 ", price='" + price + '\'' +
                 '}';

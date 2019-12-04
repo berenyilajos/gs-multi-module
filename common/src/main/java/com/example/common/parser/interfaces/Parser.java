@@ -1,4 +1,4 @@
-package com.example.demo.parser.interfaces;
+package com.example.common.parser.interfaces;
 
 import java.io.InputStream;
 import java.io.OutputStream;

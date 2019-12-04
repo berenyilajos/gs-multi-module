@@ -1,7 +1,7 @@
 package com.example.demo.parser.impl;
 
 import com.example.demo.bd.BDUser;
-import com.example.demo.parser.XmlParser;
+import com.example.common.parser.base.XmlParser;
 import org.springframework.stereotype.Component;
 
 //@Component

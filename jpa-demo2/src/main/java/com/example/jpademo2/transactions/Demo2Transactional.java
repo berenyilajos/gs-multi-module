@@ -1,4 +1,4 @@
-package com.example.demo.transactions;
+package com.example.jpademo2.transactions;
 
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,7 +1,7 @@
 package com.example.demo.parser.impl;
 
 import com.example.demo.bd.BDProduct;
-import com.example.demo.parser.JsonParser;
+import com.example.common.parser.base.JsonParser;
 import org.springframework.stereotype.Component;
 
 @Component

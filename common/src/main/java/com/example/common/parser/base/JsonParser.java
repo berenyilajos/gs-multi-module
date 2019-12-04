@@ -1,6 +1,6 @@
-package com.example.demo.parser;
+package com.example.common.parser.base;
 
-import com.example.demo.parser.interfaces.Parser;
+import com.example.common.parser.interfaces.Parser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
