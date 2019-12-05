@@ -3,6 +3,7 @@ package com.example.jpademo22.configuration;
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
@@ -14,6 +15,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -24,6 +26,9 @@ import java.util.Properties;
         transactionManagerRef= "demo2TransactionManager"
 )
 public class Demo2DataSourceConfiguration {
+
+    @Resource
+    private HibernateProperties hibernateProperties;
 
     @Bean
     @ConfigurationProperties("app.datasource.demo2")
@@ -45,10 +50,12 @@ public class Demo2DataSourceConfiguration {
                 .packages("com.example.jpademo2.entity")
                 .persistenceUnit("demoDb2")
                 .build();
-        // only needed for create-drop
-        Properties prop = new Properties();
-        prop.setProperty("hibernate.hbm2ddl.auto", "create-drop");
-        bean.setJpaProperties(prop);
+        // only needed for change to create-drop
+        if (hibernateProperties != null && hibernateProperties.getDdlAuto() != null) {
+            Properties prop = new Properties();
+            prop.setProperty("hibernate.hbm2ddl.auto", hibernateProperties.getDdlAuto());
+            bean.setJpaProperties(prop);
+        }
 
         return bean;
     }
