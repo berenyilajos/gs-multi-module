@@ -1,4 +1,4 @@
-package com.example.jpademo22.configuration;
+package com.example.jpademo2.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Qualifier;
