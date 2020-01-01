@@ -4,41 +4,41 @@ import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.function.Consumer;
 
-public abstract class BaseEntityDao<T, ID> {
+public abstract class BaseEntityDao<E, ID> {
 
     private EntityManager entityManager;
-    private Class<T> entityClass;
+    private Class<E> entityClass;
 
     public BaseEntityDao(
             EntityManager entityManager,
-            Class<T> entityClass) {
+            Class<E> entityClass) {
         this.entityManager = entityManager;
         this.entityClass = entityClass;
     }
 
-    public T find(ID id) {
+    public E find(ID id) {
         return entityManager.find(entityClass, id);
     }
 
-    public List<T> findAll() {
+    public List<E> findAll() {
         String jpql = "select e from " + entityClass.getSimpleName() + " e";
         return entityManager.createQuery(jpql, entityClass).getResultList();
     }
 
-    public void update(T entity, Consumer<T> update) throws Exception {
+    public void update(E entity, Consumer<E> update) throws Exception {
         update.accept(entity);
     }
 
-    public T save(T entity) {
+    public E save(E entity) {
         return entityManager.merge(entity);
     }
 
-    public void remove(T entity) {
+    public void remove(E entity) {
         entityManager.remove(entity);
     }
 
     public void removeById(ID id) {
-        T entity = find(id);
+        E entity = find(id);
         if (entity != null) {
             entityManager.remove(entity);
         }
