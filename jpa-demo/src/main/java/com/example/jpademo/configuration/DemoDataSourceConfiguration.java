@@ -1,57 +1,64 @@
 package com.example.jpademo.configuration;
 
-import com.zaxxer.hikari.HikariDataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
+import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(basePackages = "com.example.jpademo.repository",
         entityManagerFactoryRef = "demoEntityManagerFactory",
-        transactionManagerRef= "demoTransactionManager"
+        transactionManagerRef= "transactionManager"
 )
 public class DemoDataSourceConfiguration {
 
     @Resource
     private HibernateProperties hibernateProperties;
 
-    @Bean
+    @Bean(name = "demoDataSource")
     @Primary
-    @ConfigurationProperties("app.datasource.demo")
-    public DataSourceProperties demoDataSourceProperties() {
-        return new DataSourceProperties();
-    }
-
-    @Bean
-    @Primary
-    @ConfigurationProperties("app.datasource.demo.configuration")
     public DataSource demoDataSource() {
-        return demoDataSourceProperties().initializeDataSourceBuilder()
-                .type(HikariDataSource.class).build();
+        PoolingDataSource bitronixDataSourceBean = new PoolingDataSource();
+        bitronixDataSourceBean.setMaxPoolSize(5);
+        bitronixDataSourceBean.setUniqueName("DemoDS");
+        bitronixDataSourceBean.setClassName("org.apache.derby.jdbc.EmbeddedXADataSource");
+        Properties xaProperties = new Properties();
+        xaProperties.put("databaseName", "derbydb");
+        xaProperties.put("connectionAttributes", "create=true");
+        bitronixDataSourceBean.setDriverProperties(xaProperties);
+        bitronixDataSourceBean.setAllowLocalTransactions(true);
+        bitronixDataSourceBean.setIgnoreRecoveryFailures(true);
+        return bitronixDataSourceBean;
     }
 
     @Primary
     @Bean(name = "demoEntityManagerFactory")
-    public LocalContainerEntityManagerFactoryBean demoEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+    @DependsOn({"transactionManager", "demoDataSource"})
+    public LocalContainerEntityManagerFactoryBean demoEntityManagerFactory(
+            EntityManagerFactoryBuilder builder,
+            DataSource demoDataSource) {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("hibernate.transaction.factory_class", "jta");
+        properties.put("hibernate.transaction.jta.platform", "com.example.jta.BitronixJtaPlatform");
         LocalContainerEntityManagerFactoryBean bean = builder
-                .dataSource(demoDataSource())
+                .dataSource(demoDataSource)
                 .packages("com.example.jpademo.entity")
                 .persistenceUnit("demoDb")
+                .jta(true)
+                .properties(properties)
                 .build();
         // only needed for change to create-drop
         if (hibernateProperties != null && hibernateProperties.getDdlAuto() != null) {
@@ -61,13 +68,6 @@ public class DemoDataSourceConfiguration {
         }
 
         return bean;
-    }
-
-    @Primary
-    @Bean
-    public PlatformTransactionManager demoTransactionManager(
-            final @Qualifier("demoEntityManagerFactory") LocalContainerEntityManagerFactoryBean demoEntityManagerFactory) {
-        return new JpaTransactionManager(demoEntityManagerFactory.getObject());
     }
 
 }

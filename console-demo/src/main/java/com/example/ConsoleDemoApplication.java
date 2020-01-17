@@ -1,5 +1,6 @@
 package com.example;
 
+import com.example.configuration.DemoConfiguration;
 import com.example.demo.bd.BDProduct;
 import com.example.demo.bd.BDUser;
 import com.example.demo.parser.manager.ParsManager;
@@ -24,7 +25,7 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 	private ProductService productService;
 
 	public static void main(String[] args) {
-		SpringApplication.run(ConsoleDemoApplication.class, args);
+		SpringApplication.run(new Class<?>[] {ConsoleDemoApplication.class, DemoConfiguration.class}, args);
 	}
 
 	@Override

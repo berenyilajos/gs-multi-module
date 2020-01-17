@@ -9,6 +9,7 @@ target/
 .project
 .tern-project
 *.iml
+*.tlog
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 derby.log
