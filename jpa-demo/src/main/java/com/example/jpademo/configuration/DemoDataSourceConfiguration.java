@@ -2,6 +2,7 @@ package com.example.jpademo.configuration;
 
 import bitronix.tm.resource.jdbc.PoolingDataSource;
 import org.springframework.boot.autoconfigure.orm.jpa.HibernateProperties;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,6 +29,14 @@ public class DemoDataSourceConfiguration {
     @Resource
     private HibernateProperties hibernateProperties;
 
+    @Bean
+    @Primary
+    @ConfigurationProperties("app.datasource.demo")
+    public Properties demoDataBaseProperties() {
+        return new Properties();
+    }
+
+
     @Bean(name = "demoDataSource")
     @Primary
     public DataSource demoDataSource() {
@@ -35,10 +44,7 @@ public class DemoDataSourceConfiguration {
         bitronixDataSourceBean.setMaxPoolSize(5);
         bitronixDataSourceBean.setUniqueName("DemoDS");
         bitronixDataSourceBean.setClassName("org.apache.derby.jdbc.EmbeddedXADataSource");
-        Properties xaProperties = new Properties();
-        xaProperties.put("databaseName", "derbydb");
-        xaProperties.put("connectionAttributes", "create=true");
-        bitronixDataSourceBean.setDriverProperties(xaProperties);
+        bitronixDataSourceBean.setDriverProperties(demoDataBaseProperties());
         bitronixDataSourceBean.setAllowLocalTransactions(true);
         bitronixDataSourceBean.setIgnoreRecoveryFailures(true);
         return bitronixDataSourceBean;
