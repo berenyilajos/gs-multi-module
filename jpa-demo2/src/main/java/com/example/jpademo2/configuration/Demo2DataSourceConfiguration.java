@@ -35,6 +35,12 @@ public class Demo2DataSourceConfiguration {
         return new Properties();
     }
 
+    @Bean("demo2hibernateproperties")
+    @ConfigurationProperties("app.datasource.hibernate.demo2")
+    public Properties demo2HibernateProperties() {
+        return new Properties();
+    }
+
     @Bean(name = "demo2DataSource")
     public DataSource demo2DataSource() {
         PoolingDataSource bitronixDataSourceBean = new PoolingDataSource();
@@ -52,22 +58,13 @@ public class Demo2DataSourceConfiguration {
     public LocalContainerEntityManagerFactoryBean demo2EntityManagerFactory(
             EntityManagerFactoryBuilder builder,
             @Qualifier("demo2DataSource") DataSource demo2DataSource) {
-        Map<String, Object> properties = new HashMap<>();
-        properties.put("hibernate.transaction.factory_class", "jta");
-        properties.put("hibernate.transaction.jta.platform", "com.example.jta.BitronixJtaPlatform");
         LocalContainerEntityManagerFactoryBean bean = builder
                 .dataSource(demo2DataSource)
                 .packages("com.example.jpademo2.entity")
                 .persistenceUnit("demoDb2")
                 .jta(true)
-                .properties(properties)
                 .build();
-        // only needed for change to create-drop
-        if (hibernateProperties != null && hibernateProperties.getDdlAuto() != null) {
-            Properties prop = new Properties();
-            prop.setProperty("hibernate.hbm2ddl.auto", hibernateProperties.getDdlAuto());
-            bean.setJpaProperties(prop);
-        }
+        bean.setJpaProperties(demo2HibernateProperties());
 
         return bean;
     }
