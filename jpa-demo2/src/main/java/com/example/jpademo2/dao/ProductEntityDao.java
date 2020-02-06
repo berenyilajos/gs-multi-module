@@ -29,7 +29,7 @@ public class ProductEntityDao extends BaseEntityDao<Product, Long> {
 
     public List<Product> findProductsCheaperThen(BigDecimal price) {
         String jpql = "SELECT p FROM Product p WHERE p.price < :price";
-        TypedQuery<Product> query = getEntityManager().createQuery(jpql, Product.class);
+        TypedQuery<Product> query = typedQuery(jpql);
         query.setParameter("price", price);
 
         return query.getResultList();

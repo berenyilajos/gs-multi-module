@@ -1,6 +1,7 @@
 package com.example.common.dao;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -42,6 +43,10 @@ public abstract class BaseEntityDao<E, ID> {
         if (entity != null) {
             entityManager.remove(entity);
         }
+    }
+
+    protected TypedQuery<E> typedQuery(String jpql) {
+        return entityManager.createQuery(jpql, entityClass);
     }
 
     protected EntityManager getEntityManager() {
