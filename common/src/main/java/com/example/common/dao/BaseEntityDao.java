@@ -23,7 +23,7 @@ public abstract class BaseEntityDao<E, ID> {
 
     public List<E> findAll() {
         String jpql = "select e from " + entityClass.getSimpleName() + " e";
-        return entityManager.createQuery(jpql, entityClass).getResultList();
+        return typedQuery(jpql).getResultList();
     }
 
     public void update(E entity, Consumer<E> update) throws Exception {
