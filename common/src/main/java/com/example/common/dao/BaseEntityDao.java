@@ -30,7 +30,8 @@ public abstract class BaseEntityDao<E, ID> {
     }
 
     public E save(E entity) {
-        return entityManager.merge(entity);
+        entityManager.persist(entity);
+        return entity;
     }
 
     public void remove(E entity) {
