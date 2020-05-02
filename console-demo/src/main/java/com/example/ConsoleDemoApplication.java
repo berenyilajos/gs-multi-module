@@ -48,6 +48,8 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 
 		System.out.println("Users with name: " + userService.getUserByName(name));
 
+		System.out.println("Get users with username: " + userService.getByUserName(name));
+
 		String path = "valami";
 		parsManager.write(bdUser, path);
 		BDUser u = parsManager.parseUser(path);
@@ -99,5 +101,8 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 		System.out.println("================*************=================");
 		BigDecimal price = BigDecimal.valueOf(1020);
 		System.out.println("All Products cheaper then " + price + ": " + productService.findProductsCheaperThen(price));
+		System.out.println("================*************=================");
+		System.out.println("================*************=================");
+		System.out.println("Get all Products cheaper or equals then " + price + ": " + productService.getCheaperOrEquals(price));
 	}
 }
