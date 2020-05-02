@@ -38,6 +38,10 @@ public class ProductService {
         return EntityHelper.entityToBdProducts(productEntityDao.findProductsCheaperThen(price));
     }
 
+    public List<BDProduct> getCheaperOrEquals(BigDecimal price) {
+        return EntityHelper.entityToBdProducts(productRepository.getCheaperOrEquals(price));
+    }
+
     public BDProduct addProduct(BDProduct bdProduct) {
         return EntityHelper.entityToBd(productRepository.save(EntityHelper.bdToEntity(bdProduct)));
     }

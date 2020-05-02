@@ -8,6 +8,7 @@ target/
 .classpath
 .project
 .tern-project
+*.tlog
 *.iml
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

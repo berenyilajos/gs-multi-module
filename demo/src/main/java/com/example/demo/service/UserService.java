@@ -48,4 +48,8 @@ public class UserService {
     public List<BDUser> getUserByName(String name) {
         return EntityHelper.entityToBd(userRepository.findByName(name));
     }
+
+    public List<BDUser> getByUserName(String username) {
+        return EntityHelper.entityToBd(userRepository.getByUsername(username));
+    }
 }
