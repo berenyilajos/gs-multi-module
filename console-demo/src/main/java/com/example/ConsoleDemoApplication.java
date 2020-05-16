@@ -5,7 +5,9 @@ import com.example.demo.bd.BDUser;
 import com.example.demo.parser.manager.ParsManager;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
+import com.example.hello.interfaces.Hello;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,6 +24,20 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 	private ParsManager parsManager;
 	@Autowired
 	private ProductService productService;
+	@Autowired
+	private Hello helloWorld11;
+	@Autowired
+	@Qualifier("helloWorld11")
+	private Hello helloWorld111;
+	@Autowired
+	private Hello helloWorld12;
+	@Autowired
+	private Hello helloWorld21;
+	@Autowired
+	private Hello helloWorld22;
+	@Autowired
+	@Qualifier("helloWorld222")
+	private Hello helloWorld222;
 
 	public static void main(String[] args) {
 		SpringApplication.run(ConsoleDemoApplication.class, args);
@@ -29,6 +45,14 @@ public class ConsoleDemoApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+
+		System.out.println(helloWorld11.hello());
+		System.out.println(helloWorld111.hello());
+		System.out.println(helloWorld12.hello());
+		System.out.println(helloWorld21.hello());
+		System.out.println(helloWorld22.hello());
+		System.out.println(helloWorld222.hello());
+
 		String name = "valaki";
 		BDUser bdUser = new BDUser();
 		bdUser.setName(name);
